@@ -1,0 +1,546 @@
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+	<title>Mahjong Easy Cheating Engine</title>
+	<script src="javascripts/jquery.js" type="text/javascript"></script>
+	<script src="javascripts/raphael.js" type="text/javascript"></script>
+	<script src="javascripts/html2canvas.js"></script>
+	<style>
+		#maj_img {
+			line-height: 200px;
+			height: 200px;
+			width: 1300px;
+		}
+
+		#maj_img img {
+			margin-left: -2px;
+			margin-right: -2px;
+			text-align: auto;
+			vertical-align: middle;
+			position: relative;
+		}
+
+		#maj_img img:first-of-type {
+			margin-left: 10px;
+		}
+
+		#dora {
+			margin-left: 30px;
+		}
+		
+		html {
+			width: auto;
+		}
+		
+		@media screen and (max-device-width: 800px) {
+			#majtab{zoom: 1.5;-moz-transform: scale(2);-moz-transform-origin: 0 0;}
+		}
+	</style>
+
+</head>
+
+<body>
+	<div id="content">
+		<div id="majtab">
+			<p>Enter the Mahjong :<a href="#" id="maj_example">(Examples:5z1-11m2-22p-333s44-4z:7z):</a></p>
+			<p><input id="user_input" size="40"></p>
+			<p hidden>Type(JP/CN): <select id="icontype">
+					<option value="cn">中</option>
+					<option value="jp" selected="true">日</option>
+				</select></p>
+			<br />
+
+			<input id="maj_gen" type="button" value="Generate">
+			<input id="maj_orderButton" type="button" value="Sort">
+			<input id="maj_clearButton" type="button" value="Clear">
+			<input id="maj_random" type="button" value="Random Deal">
+			<br />
+			<br />
+			<div id="maj_img"></div>
+			<br />
+			<div id="maj_download"></div>
+		</div>
+		<br />
+
+
+		<hr />
+
+		<div id="majjp">
+			<p>日</p>
+			<img src="majjp/1m.png" />
+			<img src="majjp/2m.png" />
+			<img src="majjp/3m.png" />
+			<img src="majjp/4m.png" />
+			<img src="majjp/5m.png" />
+			<img src="majjp/0m.png" />
+			<img src="majjp/6m.png" />
+			<img src="majjp/7m.png" />
+			<img src="majjp/8m.png" />
+			<img src="majjp/9m.png" />
+			<br />
+			<img src="majjp/1p.png" />
+			<img src="majjp/2p.png" />
+			<img src="majjp/3p.png" />
+			<img src="majjp/4p.png" />
+			<img src="majjp/5p.png" />
+			<img src="majjp/0p.png" />
+			<img src="majjp/6p.png" />
+			<img src="majjp/7p.png" />
+			<img src="majjp/8p.png" />
+			<img src="majjp/9p.png" />
+			<br />
+			<img src="majjp/1s.png" />
+			<img src="majjp/2s.png" />
+			<img src="majjp/3s.png" />
+			<img src="majjp/4s.png" />
+			<img src="majjp/5s.png" />
+			<img src="majjp/0s.png" />
+			<img src="majjp/6s.png" />
+			<img src="majjp/7s.png" />
+			<img src="majjp/8s.png" />
+			<img src="majjp/9s.png" />
+			<br />
+			<img src="majjp/1z.png" />
+			<img src="majjp/2z.png" />
+			<img src="majjp/3z.png" />
+			<img src="majjp/4z.png" />
+			<img src="majjp/5z.png" />
+			<img src="majjp/6z.png" />
+			<img src="majjp/7z.png" />
+			<img src="majjp/0b.png" />
+			<img src="majjp/1b.png" />
+		</div>
+
+		<hr />
+
+		<!-- <div id="majcn">
+			<p>中</p>
+			<img src="majcn/1m.png" />
+			<img src="majcn/2m.png" />
+			<img src="majcn/3m.png" />
+			<img src="majcn/4m.png" />
+			<img src="majcn/5m.png" />
+			<img src="majcn/6m.png" />
+			<img src="majcn/7m.png" />
+			<img src="majcn/8m.png" />
+			<img src="majcn/9m.png" />
+			<br />
+			<img src="majcn/1p.png" />
+			<img src="majcn/2p.png" />
+			<img src="majcn/3p.png" />
+			<img src="majcn/4p.png" />
+			<img src="majcn/5p.png" />
+			<img src="majcn/6p.png" />
+			<img src="majcn/7p.png" />
+			<img src="majcn/8p.png" />
+			<img src="majcn/9p.png" />
+			<br />
+			<img src="majcn/1s.png" />
+			<img src="majcn/2s.png" />
+			<img src="majcn/3s.png" />
+			<img src="majcn/4s.png" />
+			<img src="majcn/5s.png" />
+			<img src="majcn/6s.png" />
+			<img src="majcn/7s.png" />
+			<img src="majcn/8s.png" />
+			<img src="majcn/9s.png" />
+			<br />
+			<img src="majcn/1z.png" />
+			<img src="majcn/2z.png" />
+			<img src="majcn/3z.png" />
+			<img src="majcn/4z.png" />
+			<img src="majcn/5z.png" />
+			<img src="majcn/6z.png" />
+			<img src="majcn/7z.png" />
+			<img src="majcn/0b.png" />
+			<img src="majcn/1b.png" />
+			<br />
+			<img src="majcn/1x.png" />
+			<img src="majcn/2x.png" />
+			<img src="majcn/3x.png" />
+			<img src="majcn/4x.png" />
+			<img src="majcn/5x.png" />
+			<img src="majcn/6x.png" />
+			<img src="majcn/7x.png" />
+			<img src="majcn/8x.png" />
+		</div> -->
+
+		<script type='text/javascript'>
+			var saveFile = function (data, filename) {
+				var save_link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
+				save_link.href = data;
+				save_link.download = filename;
+
+				var event = document.createEvent('MouseEvents');
+				event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+				save_link.dispatchEvent(event);
+			};
+
+			$('#maj_example').click(function () {
+				$('#user_input').val('5z1-11m2-22p-333s44-4z:7z');
+				$('#maj_gen').click();
+			})
+
+			$('#maj_gen').click(function () {
+				var icontype = $('#icontype').val();
+				var rawValue = $('#user_input').val();
+				var each = '';
+				var checkNumber = /^(\-|\+)?\d{1}$/;
+				var checkAlphabet = /^[A-Za-z]*$/;
+				var outputValue = new Array();
+				var tempNumArray = new Array();
+				var dora = '';
+				var symbol = '';
+				var lasteach = ''
+				//牌背数量
+				var backCount = 0;
+				//图片偏移
+				var allOffset = 0;
+
+				//分割宝牌
+				if (rawValue.match(':')) {
+					todoValue = rawValue.split(':')[0];
+					dora = rawValue.split(':')[1];
+				}
+				else {
+					todoValue = rawValue;
+				}
+
+				//输入处理
+				for (each of todoValue) {
+					if (checkNumber.test(symbol + each)) {
+						tempNumArray.push(symbol + each)
+						symbol = '';
+					}
+					else if (checkAlphabet.test(each)) {
+						var tempEach = new Array();
+						for (tempEach of tempNumArray) {
+							outputValue.push(tempEach + each)
+						}
+						tempNumArray = []
+					}
+					else if (each == '-') {
+						symbol = '-';
+					}
+				}
+				each = ''
+				$('#maj_img').html('');
+				for (each of outputValue) {
+					if (each[0] == '-') {
+						if (each == lasteach) {
+							//暗杠
+							$('#maj_img').append('<img class="' + each + '" src="maj' + icontype + '/' + each.substr(1, 2) + '.png" style="transform-origin:left bottom;transform:translateX(-1px) translateY(-72px) rotate(270deg)"/>')
+							//$('.rotate2').css('transform-origin','left bottom');
+							//$('.rotate2').css('transform','translateX(30px) translateY(-75px) rotate(270deg)');
+						}
+						else {
+							//吃碰
+							$('#maj_img').append('<img class="' + each + '" src="maj' + icontype + '/' + each.substr(1, 2) + '.png" style="transform-origin:left bottom;transform:translateX(100px) rotate(270deg);margin-right:33px;"/>')
+							//$('.rotate1').css('transform-origin','left bottom');
+							//$('.rotate1').css('transform','rotate(270deg)');
+						}
+					}
+					else if ((each == '0b') || (each == '1b')) {
+						//牌背，暂不完善
+						backCount = backCount + 1;
+						if (backCount % 2 == 0) {
+							$('#maj_img').append('<img class="' + each + '"  src="maj' + icontype + '/' + each + '.png" style="margin-right:5px;transform:translateX(2px)"/>')
+							//$('.rotate3').css('transform','translateX(-35px)');
+						}
+						else {
+							$('#maj_img').append('<img class="' + each + '"  src="maj' + icontype + '/' + each + '.png"  style="margin-right:5px;transform:translateX(2px);"/>');
+						}
+					}
+					else {
+						$('#maj_img').append('<img class="' + each + '"  src="maj' + icontype + '/' + each + '.png" style="margin-left:-1px;margin-right:-1px;"/> ');
+					}
+					lasteach = each;
+				}
+
+				//宝牌
+				if (dora) {
+					$('#maj_img').append('<span id="dora">ドラ</span>');
+					$('#maj_img').append('<img class="dora' + dora + '"  src="maj' + icontype + '/' + dora + '.png" style="margin-left:5px"/>')
+				}
+
+				//二次整理css
+				$('#maj_img img:gt(2)').each(function () {
+					if (typeof ($(this).prev().prev()) != "undefined") {
+						//if (($(this).prev().attr('class')[0] == '-') && ($(this).prev().attr('class') == $(this).prev().prev().attr('class'))){
+						if ($(this).prev().attr('class') == $(this).prev().prev().attr('class')) {
+							if (($(this).prev().attr('class')[0] == '-')) {
+								//console.log($(this).attr('class'));
+								$(this).css('transform', 'translateX(-66px)');
+							}
+						}
+						if ($(this).prev().prev().attr('class') == $(this).prev().prev().prev().attr('class')) {
+							if (($(this).prev().prev().attr('class')[0] == '-') && ($(this).prev().attr('class') == $(this).attr('class'))) {
+								//console.log($(this).attr('class'));
+								$(this).css('transform', 'translateX(-66px)');
+								$(this).prev().css('transform', 'translateX(-66px)');
+							}
+						}
+					}
+				});
+
+				$('#maj_img img').on('click', function () {
+					$(this).remove();
+					if ($(this).attr('class').substring(0, 4) == 'dora') {
+						$('#dora').remove();
+					}
+					var allMaj = new Array();
+					$('#maj_img img').each(function () {
+						allMaj.push($(this).attr('class'));
+					});
+
+					var newval = ''
+					for (each of allMaj) {
+						if (each.substring(0, 4) != 'dora') {
+							newval = newval + each;
+						}
+						if (each.substring(0, 4) == 'dora') {
+							newval = newval + ':' + each.substring(4, 6);
+						}
+					}
+					$('#user_input').val(newval);
+				})
+				$('#maj_toaddress').click();
+			})
+
+			$('#maj_clearButton').click(function () {
+				$('#user_input').val('');
+				$('#maj_img').html('');
+				$('#maj_download').html('');
+			})
+
+			//理牌
+			$('#maj_orderButton').click(function () {
+				var majValue = $('#user_input').val();
+				if (majValue.indexOf(':') < 0) {
+					//no dora
+					var checkNumber = /^(\-|\+)?\d{1}$/;
+					var checkAlphabet = /^[A-Za-z]*$/;
+					var outputValue = new Array();
+					var tempNumArray = new Array();
+					for (each of majValue) {
+						if (checkNumber.test(each)) {
+							tempNumArray.push(each)
+							symbol = '';
+						}
+						else if (checkAlphabet.test(each)) {
+							var tempEach = new Array();
+							for (tempEach of tempNumArray) {
+								outputValue.push(tempEach + each)
+							}
+							tempNumArray = []
+						}
+					}
+
+					var others = '';
+					for (each of outputValue) {
+						others = others + each;
+					}
+				}
+				if (majValue.indexOf(':') > 0) {
+					//dora
+					var others = majValue.split(':')[0];
+					var dora = majValue.split(':')[1];
+				}
+				var eachArray = []
+				for (var i = 0; i < others.length; i = i + 2) {
+					eachArray.push(others.substr(i, 2));
+				}
+				var mArray = []
+				var pArray = []
+				var sArray = []
+				var zArray = []
+				for (each of eachArray) {
+					if (each[1] == 'm') {
+						mArray.push(each);
+					}
+					if (each[1] == 'p') {
+						pArray.push(each);
+					}
+					if (each[1] == 's') {
+						sArray.push(each);
+					}
+					if (each[1] == 'z') {
+						zArray.push(each);
+					}
+				}
+				mArray = mArray.sort();
+				pArray = pArray.sort();
+				sArray = sArray.sort();
+				zArray = zArray.sort();
+				// fix 0mps loc
+				if (mArray[0] == '0m' && mArray.length > 1){
+					mArray.splice(0,1);
+					var getIndex = -1;
+					for (var i = 0; i < mArray.length - 1; i++){
+						if (mArray[i][0] <= 5 && mArray[i + 1][0] >= 5){
+							getIndex = i + 1;
+						}
+					}
+					if (mArray[0][0] >= 5){
+						getIndex = 0;
+					}
+					if (mArray[mArray.length - 1][0] <= 5){
+						getIndex = mArray.length;
+					}
+					if (getIndex != -1){
+						mArray.splice(getIndex, 0, '0m');
+					}
+				}
+				if (pArray[0] == '0p' && pArray.length > 1){
+					pArray.splice(0,1);
+					var getIndex = -1;
+					for (var i = 0; i < pArray.length - 1; i++){
+						if (pArray[i][0] <= 5 && pArray[i + 1][0] >= 5){
+							getIndex = i + 1;
+						}
+					}
+					if (pArray[0][0] >= 5){
+						getIndex = 0;
+					}
+					if (pArray[pArray.length - 1][0] <= 5){
+						getIndex = pArray.length;
+					}
+					if (getIndex != -1){
+						pArray.splice(getIndex, 0, '0p');
+					}
+				}
+				if (sArray[0] == '0s' && sArray.length > 1){
+					sArray.splice(0,1);
+					var getIndex = -1;
+					for (var i = 0; i < sArray.length - 1; i++){
+						if (sArray[i][0] <= 5 && sArray[i + 1][0] >= 5){
+							getIndex = i + 1;
+						}
+					}
+					if (sArray[0][0] >= 5){
+						getIndex = 0;
+					}
+					if (sArray[sArray.length - 1][0] <= 5){
+						getIndex = sArray.length;
+					}
+					if (getIndex != -1){
+						sArray.splice(getIndex, 0, '0s');
+					}
+				}
+				newArray = '';
+				//newArray.push(mArray.sort());
+				newArray = mArray + ',' + pArray + ',' + sArray + ',' + zArray;
+				outputValue = ''
+				for (each of newArray) {
+					outputValue = outputValue + each;
+				}
+				if (majValue.indexOf(':') < 0) {
+					outputValue = outputValue.replace(/,/g, '');
+				}
+				if (majValue.indexOf(':') > 0) {
+					outputValue = outputValue.replace(/,/g, '') + ':' + dora;
+				}
+				$('#user_input').val(outputValue);
+				$('#maj_gen').click();
+			})
+
+			//随机生成13张牌
+			$('#maj_random').click(function () {
+				var rawMahjong = [
+					'1p', '1p', '1p', '1p',
+					'2p', '2p', '2p', '2p',
+					'3p', '3p', '3p', '3p',
+					'4p', '4p', '4p', '4p',
+					'5p', '5p', '5p', '0p',
+					'6p', '6p', '6p', '6p',
+					'7p', '7p', '7p', '7p',
+					'8p', '8p', '8p', '8p',
+					'9p', '9p', '9p', '9p',
+					'1s', '1s', '1s', '1s',
+					'2s', '2s', '2s', '2s',
+					'3s', '3s', '3s', '3s',
+					'4s', '4s', '4s', '4s',
+					'5s', '5s', '5s', '0s',
+					'6s', '6s', '6s', '6s',
+					'7s', '7s', '7s', '7s',
+					'8s', '8s', '8s', '8s',
+					'9s', '9s', '9s', '9s',
+					'1m', '1m', '1m', '1m',
+					'2m', '2m', '2m', '2m',
+					'3m', '3m', '3m', '3m',
+					'4m', '4m', '4m', '4m',
+					'5m', '5m', '5m', '0m',
+					'6m', '6m', '6m', '6m',
+					'7m', '7m', '7m', '7m',
+					'8m', '8m', '8m', '8m',
+					'9m', '9m', '9m', '9m',
+					'1z', '1z', '1z', '1z',
+					'2z', '2z', '2z', '2z',
+					'3z', '3z', '3z', '3z',
+					'4z', '4z', '4z', '4z',
+					'5z', '5z', '5z', '5z',
+					'6z', '6z', '6z', '6z',
+					'7z', '7z', '7z', '7z',
+				];
+				var randomMaj = ''
+				for (var i = 0; i < 14; i++) {
+					var randomIndex = Math.floor(Math.random() * rawMahjong.length);
+					if (i < 13) {
+						randomMaj = randomMaj + rawMahjong[randomIndex];
+					}
+					else if (i == 13) {
+						randomMaj = randomMaj + ':' + rawMahjong[randomIndex];
+					}
+					rawMahjong.splice(randomIndex, 1)
+				}
+				$('#user_input').val(randomMaj);
+				$('#maj_gen').click();
+				$('#maj_orderButton').click();
+			})
+
+			$('#icontype').click(function () {
+				$('#maj_gen').click();
+			})
+
+
+			//获取网址的参数并显示出牌谱
+			$(document).ready(function () {
+				var newhref = window.location.href;
+				if (newhref.indexOf('?') > 0) {
+					$('#user_input').val(newhref.split('?')[1].split('#')[0]);
+					$('#maj_gen').click();
+				}
+
+
+				//点击图片添加
+				$('#majjp img,#majcn img').on('click', function () {
+					var oldsrc = $(this).attr('src');
+					var oldval = $('#user_input').val();
+					if (oldval.indexOf(':') > 0) {
+						var others = oldval.split(':')[0];
+						var dora = oldval.split(':')[1];
+						var newval = oldsrc.substring(6, 8)
+						$('#user_input').val(others + newval + ':' + dora);
+						$('#maj_gen').click();
+					}
+					else {
+						var newval = oldsrc.substring(6, 8)
+						$('#user_input').val(oldval + newval);
+						$('#maj_gen').click();
+					}
+				})
+
+				$(document).keydown(function () {
+					if (event.keyCode == 13) {//回车键的键值为13
+						$('#maj_gen').click();
+					}
+				});
+			});
+		</script>
+</body>
+
+</html>
